@@ -5,23 +5,23 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-be/.bundle
+/.bundle
 
 # Ignore all logfiles and tempfiles.
-be/log/*
-be/tmp/*
+/log/*
+/tmp/*
 !/log/.keep
 !/tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
-betmp/pids/*
+/tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
 
 # Ignore uploaded files in development.
-be/storage/*
+/storage/*
 !/storage/.keep
-be/tmp/storage/*
+/tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
 
