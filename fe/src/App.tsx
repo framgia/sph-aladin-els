@@ -1,57 +1,83 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+import {
+  Container,
+  Center,
+  Alert,
+  AlertIcon,
+<<<<<<< HEAD
+=======
+  Flex,
+>>>>>>> 1aee8e4 (fix merge conflict)
+  AlertTitle,
+} from "@chakra-ui/react";
+
+import "./App.css";
+
+import SignupPage from "./pages/SignUp";
+import { userSelect } from "./redux/userSlice";
+import { useAppSelector } from "./redux/hooks";
+<<<<<<< HEAD
+import { BrowserRouter } from "react-router-dom";
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+import Routers from "./routes/Routers";
+
+=======
+import Routes from "./routes/Routes";
+>>>>>>> d71ebee (Fix/file structure (#12))
+=======
+
+import Routers from "./routes/Routers";
+
+>>>>>>> 8275fda (Fix/file structure (#13))
+=======
+import { BrowserRouter, Link } from "react-router-dom";
+import Routers from "./routes/Routers";
+>>>>>>> 1aee8e4 (fix merge conflict)
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
+  const { message, messageType }: any = useAppSelector(userSelect);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <BrowserRouter>
+      {message && message.length > 0 && (
+<<<<<<< HEAD
+=======
+      {message.length > 0 && (
+>>>>>>> d71ebee (Fix/file structure (#12))
+=======
+>>>>>>> 1aee8e4 (fix merge conflict)
+        <Alert status={messageType}>
+          <AlertIcon />
+          <AlertTitle>{message}</AlertTitle>
+        </Alert>
+      )}
+<<<<<<< HEAD
+=======
+      <Flex>
+        <Link to="user-list">User List</Link>
+      </Flex>
+>>>>>>> 1aee8e4 (fix merge conflict)
+      <Center h="980px">
+        <Container maxW="md" h={"400px"}>
+<<<<<<< HEAD
+<<<<<<< HEAD
+          <Routers />
+<<<<<<< HEAD
+=======
+          <Routes />
+>>>>>>> d71ebee (Fix/file structure (#12))
+=======
+
+          <Routers />
+
+>>>>>>> 8275fda (Fix/file structure (#13))
+=======
+>>>>>>> 1aee8e4 (fix merge conflict)
+        </Container>
+      </Center>
+    </BrowserRouter>
   );
 }
 
