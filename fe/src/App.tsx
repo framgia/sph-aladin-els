@@ -8,13 +8,10 @@ import {
 } from "@chakra-ui/react";
 
 import "./App.css";
-
-import SignupPage from "./pages/SignUp";
 import { userSelect } from "./redux/userSlice";
 import { useAppSelector } from "./redux/hooks";
 import { BrowserRouter } from "react-router-dom";
 import Routers from "./routes/Routers";
-import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   const { message, messageType }: any = useAppSelector(userSelect);
