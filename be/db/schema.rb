@@ -45,10 +45,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_27_085540) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c344dd7 (User list page displaying all of the users)
     t.boolean "is_admin", default: false
     t.string "lastname"
     t.string "firstname"
     t.string "jti"
+<<<<<<< HEAD
+=======
+=======
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "jti"
+    t.string "lastname"
+    t.string "firstname"
+    t.boolean "is_admin", default: false
+>>>>>>> 99fe4a6 (Create an api that will send over all of the user and their info)
+>>>>>>> c344dd7 (User list page displaying all of the users)
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
