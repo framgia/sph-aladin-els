@@ -8,14 +8,16 @@ import {
 } from "@chakra-ui/react";
 
 import "./App.css";
-import SignupPage from "./app/components /authentication/SignupPage";
-import { userSelect } from "./features/authentication/user";
-import { useAppSelector } from "./app/hooks";
+import SignupPage from "./app/pages/SignUp";
+import { userSelect } from "./app/redux/userSlice";
+import { useAppSelector } from "./app/redux/hooks";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PrivateRoute from "./app/routes/PrivateRoute";
 
 function App() {
   const { message, messageType }: any = useAppSelector(userSelect);
   return (
-    <>
+    <BrowserRouter>
       {message.length > 0 && (
         <Alert status={messageType}>
           <AlertIcon />
@@ -24,10 +26,16 @@ function App() {
       )}
       <Center h="980px">
         <Container maxW="md" h={"400px"}>
-          <SignupPage />
+          <Routes>
+            <Route element={<SignupPage />} path="/signup" />
+            <Route
+              path="/"
+              element={<PrivateRoute>{/* Private Page */}</PrivateRoute>}
+            />
+          </Routes>
         </Container>
       </Center>
-    </>
+    </BrowserRouter>
   );
 }
 

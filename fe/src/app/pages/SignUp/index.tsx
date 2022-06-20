@@ -1,8 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "../../hooks";
-import { registerUser } from "../../../features/authentication/user";
-
+import { useAppDispatch } from "../../redux/hooks";
+import { registerUser } from "../../redux/userSlice";
 import {
   FormControl,
   FormLabel,
