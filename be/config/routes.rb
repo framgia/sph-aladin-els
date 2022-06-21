@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   
    post 'password/forgot', to: 'passwords#forgot'
    post 'password/reset', to: 'passwords#reset'
+
+ post 'user/edit', to: 'users#edit'
+
   # Defines the root path route ("/")
   # root "articles#index"
 end
