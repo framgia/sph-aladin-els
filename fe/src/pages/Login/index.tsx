@@ -20,6 +20,7 @@ export interface User {
   password: string;
   firstname: string;
   lastname: string;
+  token: string;
 }
 
 function LoginPage() {
@@ -54,12 +55,20 @@ function LoginPage() {
           </Button>
         </FormControl>
       </form>
-      <Text fontSize="xs">
-        don't have an account?
-        <span>
-          <Link to="/signup"> Signup</Link>
-        </span>
-      </Text>
+      <Flex flexDirection={"column"}>
+        <Text fontSize="xs" my={5}>
+          don't have an account?
+          <span>
+            <Link to="/signup"> Signup</Link>
+          </span>
+        </Text>
+        <Text fontSize="xs">
+          forgot password?
+          <span>
+            <Link to="/forgot"> Forgot password</Link>
+          </span>
+        </Text>
+      </Flex>
     </Flex>
   );
 }

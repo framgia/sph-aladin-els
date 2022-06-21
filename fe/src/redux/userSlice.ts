@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { elearningApiCall } from "../utils/railsApi";
-import { User } from "../pages/SignUp";
+import { User } from "../pages/Login";
 
 export const registerUser = createAsyncThunk(
   "user/register_user",
@@ -33,6 +33,38 @@ export const loginUser = createAsyncThunk(
       return fulfillWithValue(res.data);
     } catch (err: any) {
       return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk(
+  "user/forgot_password",
+  async (data: User, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const res = await elearningApiCall.post("/forgot", {
+        email: data.email,
+      });
+      return fulfillWithValue(res.data);
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "user/forgot_password",
+  async (data: User, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const res = await elearningApiCall.post("/password/reset", {
+        user: {
+          email: data.email,
+          token: data.token,
+          password: data.password,
+        },
+      });
+      return fulfillWithValue(res.data.status.message);
+    } catch (err: any) {
+      return rejectWithValue(err.response.data.status.message);
     }
   }
 );
@@ -83,6 +115,7 @@ const userSlice = createSlice({
     });
     builder.addCase(loginUser.pending, (state, action) => {
       state.isFetching = true;
+      state.isSignedIn = true;
     });
 
     builder.addCase(loginUser.fulfilled, (state, { payload }: any) => {
@@ -98,6 +131,18 @@ const userSlice = createSlice({
     });
 
     builder.addCase(loginUser.rejected, (state, action: any) => {
+      // set error message
+      state.message = action.payload;
+      state.messageType = "error";
+    });
+    builder.addCase(forgotPassword.fulfilled, (state, { payload }: any) => {
+      // set success message
+      state.isSuccess = true;
+      state.message = "Email successfully sent please check your email";
+      state.messageType = "success";
+    });
+
+    builder.addCase(forgotPassword.rejected, (state, action: any) => {
       // set error message
       state.message = action.payload;
       state.messageType = "error";
