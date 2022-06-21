@@ -1,13 +1,15 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from "../../redux/hooks";
-import { registerUser } from "../../redux/userSlice";
-import { Link, Navigate } from "react-router-dom";
+import { registerUser, loginUser } from "../../redux/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import env from "react-dotenv";
 import {
   FormControl,
   FormLabel,
-  Heading,
+  Container,
   Text,
+  Heading,
   Input,
   Button,
   Flex,
@@ -16,18 +18,23 @@ import {
 export interface User {
   email: string;
   password: string;
+  firstname: string;
+  lastname: string;
 }
 
 function SignupPage() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<User>();
-  const handleSubmitUser: SubmitHandler<User> = (data) => {
-    dispatch(registerUser(data));
+  const handleSubmitUser: SubmitHandler<User> = (data, e) => {
+    e?.preventDefault();
+    dispatch(loginUser(data));
+    return navigate("/");
   };
 
   return (
     <Flex flexDirection={"column"} h={"320px"} justifyContent={"space-between"}>
-      <Heading mb={"30"}>Register</Heading>
+      <Heading mb={"30"}>Login</Heading>
       <form onSubmit={handleSubmit(handleSubmitUser)}>
         <FormControl isRequired>
           <FormLabel htmlFor="email">Email address</FormLabel>
@@ -43,14 +50,14 @@ function SignupPage() {
             type="password"
           />
           <Button mt={5} bg={"blue.800"} color={"white"} type="submit">
-            Register
+            Login
           </Button>
         </FormControl>
       </form>
-      <Text mt={5} fontSize="xs">
-        already have an account?
+      <Text fontSize="xs">
+        don't have an account?
         <span>
-          <Link to="/login"> Login</Link>
+          <Link to="/signup"> Signup</Link>
         </span>
       </Text>
     </Flex>

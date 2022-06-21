@@ -4,7 +4,7 @@ import React from "react";
 
 function useAuth() {
   const email = useSelector((state: RootState) => state.user.email);
-  console.log(email);
+
   if (email.length > 0) {
     return true;
   } else {
