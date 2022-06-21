@@ -30,6 +30,7 @@ export const loginUser = createAsyncThunk(
           password: data.password,
         },
       });
+      console.log(res);
       return fulfillWithValue(res.data);
     } catch (err: any) {
       return rejectWithValue(err.response.data);
@@ -41,30 +42,29 @@ export const forgotPassword = createAsyncThunk(
   "user/forgot_password",
   async (data: User, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const res = await elearningApiCall.post("/forgot", {
-        email: data.email,
+      const res = await elearningApiCall.post("/password/forgot", {
+        email: data,
       });
       return fulfillWithValue(res.data);
     } catch (err: any) {
+      console.log(err);
       return rejectWithValue(err.response.data);
     }
   }
 );
 
 export const resetPassword = createAsyncThunk(
-  "user/forgot_password",
+  "user/reset_password",
   async (data: User, { rejectWithValue, fulfillWithValue }) => {
     try {
       const res = await elearningApiCall.post("/password/reset", {
-        user: {
-          email: data.email,
-          token: data.token,
-          password: data.password,
-        },
+        email: data.email,
+        token: data.token,
+        password: data.password,
       });
-      return fulfillWithValue(res.data.status.message);
+      return fulfillWithValue(res.data.alert);
     } catch (err: any) {
-      return rejectWithValue(err.response.data.status.message);
+      return rejectWithValue(err.response.data.error[0]);
     }
   }
 );
@@ -119,13 +119,13 @@ const userSlice = createSlice({
     });
 
     builder.addCase(loginUser.fulfilled, (state, { payload }: any) => {
-      const { email, id } = payload.data;
       // set success message
       state.isFetching = false;
       state.isSuccess = true;
-      state.id = id;
-      state.email = email;
-      state.message = payload.status.message;
+      state.id = payload?.dataid;
+      state.email = payload?.data?.email;
+      console.log(payload);
+      state.message = payload.status?.message;
       state.messageType = "success";
       state.isSignedIn = true;
     });
@@ -140,12 +140,32 @@ const userSlice = createSlice({
       state.isSuccess = true;
       state.message = "Email successfully sent please check your email";
       state.messageType = "success";
+      state.isFetching = false;
     });
 
     builder.addCase(forgotPassword.rejected, (state, action: any) => {
       // set error message
       state.message = action.payload;
       state.messageType = "error";
+      state.isFetching = false;
+    });
+
+    builder.addCase(forgotPassword.pending, (state, action: any) => {
+      // set error message
+      state.isFetching = true;
+    });
+    builder.addCase(resetPassword.fulfilled, (state, action: any) => {
+      // set error message
+      console.log(action);
+      state.message = action.payload;
+      state.messageType = "success";
+      state.isSuccess = true;
+    });
+    builder.addCase(resetPassword.rejected, (state, action: any) => {
+      // set error message
+      state.message = action.payload;
+      state.messageType = "error";
+      state.isSuccess = false;
     });
   },
 });

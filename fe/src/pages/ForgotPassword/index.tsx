@@ -5,16 +5,22 @@ import {
   Heading,
   Input,
   Button,
+  Text,
   Flex,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { forgotPassword } from "../../redux/userSlice";
 import { User } from "../Login";
+import { userSelect } from "../../redux/userSlice";
 import { useAppDispatch } from "../../redux/hooks";
 
 function ForgotPassword() {
+  const { message, messageType, isFetching, isSuccess }: any =
+    useAppSelector(userSelect);
   const { register, handleSubmit } = useForm<User>();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handleSubmitUser: SubmitHandler<User> = (data, e) => {
     const { email }: any = data;
@@ -32,11 +38,21 @@ function ForgotPassword() {
             type="email"
           />
 
-          <Button mt={5} bg={"blue.800"} color={"white"} type="submit">
+          <Button
+            mt={5}
+            bg={isFetching ? "gray.300" : "blue.800"}
+            color={"white"}
+            type="submit"
+          >
             Send email
           </Button>
         </FormControl>
       </form>
+      {isSuccess && (
+        <Text fontSize="xs">
+          <Link to="/reset_password"> Reset password</Link>
+        </Text>
+      )}
     </Flex>
   );
 }

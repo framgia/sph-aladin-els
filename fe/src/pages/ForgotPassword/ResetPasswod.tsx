@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link, useNavigate } from "react-router-dom";
+import { resetPassword, userSelect } from "../../redux/userSlice";
 import {
   FormControl,
   FormLabel,
@@ -15,10 +16,13 @@ import {
 import { User } from "../Login";
 
 function ResetPasswod() {
-  const { register, handleSubmit } = useForm<User>();
+  const dispatch = useAppDispatch();
+  const { isSuccess }: any = useAppSelector(userSelect);
+  const { register, handleSubmit, reset } = useForm<User>();
   const handleSubmitUser: SubmitHandler<User> = (data, e) => {
     e?.preventDefault();
-    console.log(data);
+    dispatch(resetPassword(data));
+    isSuccess && reset();
   };
   return (
     <Flex flexDirection={"column"} h={"320px"} justifyContent={"space-between"}>
@@ -41,13 +45,22 @@ function ResetPasswod() {
           <Input
             id="token"
             {...register("token", { required: "token" })}
-            type="text"
+            type="password"
           />
           <Button mt={5} bg={"blue.800"} color={"white"} type="submit">
             Reset Password
           </Button>
         </FormControl>
       </form>
+      {isSuccess ? (
+        <Text fontSize="xs" mt={"5"}>
+          <Link to="/"> Login</Link>
+        </Text>
+      ) : (
+        <Text fontSize="xs" mt={"5"}>
+          <Link to="/forgot"> Generate token </Link>
+        </Text>
+      )}
     </Flex>
   );
 }

@@ -1,7 +1,6 @@
 class PasswordsController < ApplicationController
     def forgot
         user = User.find_by(email: params[:email])
-        
         if user
           render json: {
             alert: "If this user exists, we have sent you a password reset email."
@@ -9,8 +8,8 @@ class PasswordsController < ApplicationController
           user.send_password_reset
         else
           render json: {
-            alert: "If this user exists, we have sent you a password reset email"
-          }, status: 403
+            alert: "If this user exists, we have sent you a password reset email."
+          }
         end
       end
     
@@ -25,14 +24,8 @@ class PasswordsController < ApplicationController
             render json: { error: user.errors.full_messages }, status: :unprocessable_entity
           end
         else
-          render json: {error:  ['Link not valid or expired. Try generating a new link.']}, status: 404
+          render json: {error:  ['Link not valid or expired. Try generating a new link.']}, status: :not_found
         end
-      end
-     
-      private
-
-      def password_params
-       params.require(:password).permit(:email, :password)
       end
     
 end
