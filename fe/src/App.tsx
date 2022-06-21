@@ -13,12 +13,14 @@ import { userSelect } from "./app/redux/userSlice";
 import { useAppSelector } from "./app/redux/hooks";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./app/routes/PrivateRoute";
+import LoginPage from "./app/pages/Login";
+import Testing from "./app/Testing";
 
 function App() {
   const { message, messageType }: any = useAppSelector(userSelect);
   return (
     <BrowserRouter>
-      {message.length > 0 && (
+      {message && message.length > 0 && (
         <Alert status={messageType}>
           <AlertIcon />
           <AlertTitle>{message}</AlertTitle>
@@ -28,9 +30,14 @@ function App() {
         <Container maxW="md" h={"400px"}>
           <Routes>
             <Route element={<SignupPage />} path="/signup" />
+            <Route element={<LoginPage />} path="/login" />
             <Route
               path="/"
-              element={<PrivateRoute>{/* Private Page */}</PrivateRoute>}
+              element={
+                <PrivateRoute>
+                  <Testing />
+                </PrivateRoute>
+              }
             />
           </Routes>
         </Container>
