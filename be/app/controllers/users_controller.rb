@@ -13,6 +13,13 @@ class UsersController < ApplicationController
           }, status: :unprocessable_entity
       end
     end
+
+    def show
+        render json: {
+            status: 200,
+            data: current_user
+          }
+    end
     
     private
 
