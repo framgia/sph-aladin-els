@@ -11,7 +11,8 @@ import "./App.css";
 import SignupPage from "./app/pages/SignUp";
 import { userSelect } from "./app/redux/userSlice";
 import { useAppSelector } from "./app/redux/hooks";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import Routes from "./app/routes/Routes";
 import PrivateRoute from "./app/routes/PrivateRoute";
 
 function App() {
@@ -26,13 +27,7 @@ function App() {
       )}
       <Center h="980px">
         <Container maxW="md" h={"400px"}>
-          <Routes>
-            <Route element={<SignupPage />} path="/signup" />
-            <Route
-              path="/"
-              element={<PrivateRoute>{/* Private Page */}</PrivateRoute>}
-            />
-          </Routes>
+          <Routes />
         </Container>
       </Center>
     </BrowserRouter>
