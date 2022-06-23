@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/current_user', to: 'current_user#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
@@ -9,6 +10,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
+
+ post 'user/edit', to: 'users#edit'
+ get 'user/profile', to: 'users#show'
+
 
   # Defines the root path route ("/")
   # root "articles#index"
