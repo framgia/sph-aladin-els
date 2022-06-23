@@ -8,12 +8,13 @@ import {
 } from "@chakra-ui/react";
 
 import "./App.css";
-import SignupPage from "./app/pages/SignUp";
-import { userSelect } from "./app/redux/userSlice";
-import { useAppSelector } from "./app/redux/hooks";
+
+import SignupPage from "./pages/SignUp";
+import { userSelect } from "./redux/userSlice";
+import { useAppSelector } from "./redux/hooks";
 import { BrowserRouter } from "react-router-dom";
-import Routes from "./app/routes/Routes";
-import PrivateRoute from "./app/routes/PrivateRoute";
+import Routes from "./routes/Routes";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   const { message, messageType }: any = useAppSelector(userSelect);

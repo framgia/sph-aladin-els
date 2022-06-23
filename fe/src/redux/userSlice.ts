@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { elearningApiCall } from "../../app/utils/railsApi";
-import { RootState } from "../../app/redux/store";
+import { RootState } from "./store";
+import { elearningApiCall } from "../utils/railsApi";
 import { User } from "../pages/SignUp";
 
 export const registerUser = createAsyncThunk(
