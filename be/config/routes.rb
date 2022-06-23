@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   }
 
  post 'user/edit', to: 'users#edit'
+ get 'user/profile', to: 'users#show'
+
 
   # Defines the root path route ("/")
   # root "articles#index"
