@@ -32,6 +32,7 @@ export const loginUser = createAsyncThunk(
       });
       return fulfillWithValue(res.data);
     } catch (err: any) {
+      console.log(err);
       return rejectWithValue(err.response.data);
     }
   }
@@ -39,6 +40,8 @@ export const loginUser = createAsyncThunk(
 
 interface UserState {
   email: string;
+  firstname: string;
+  lastname: string;
   isFetching: boolean;
   isSuccess: boolean;
   isError: boolean;
@@ -49,6 +52,8 @@ interface UserState {
 }
 
 const initialState: UserState = {
+  lastname: "",
+  firstname: "",
   email: "",
   id: "",
   isFetching: false,
@@ -83,24 +88,29 @@ const userSlice = createSlice({
     });
     builder.addCase(loginUser.pending, (state, action) => {
       state.isFetching = true;
+      state.isSignedIn = false;
     });
 
     builder.addCase(loginUser.fulfilled, (state, { payload }: any) => {
-      const { email, id } = payload.data;
+      const { email, id, lastname, firstname } = payload.data;
       // set success message
       state.isFetching = false;
       state.isSuccess = true;
       state.id = id;
+      state.firstname = firstname;
+      state.lastname = lastname;
       state.email = email;
       state.message = payload.status.message;
       state.messageType = "success";
       state.isSignedIn = true;
+      console.log(payload);
     });
 
     builder.addCase(loginUser.rejected, (state, action: any) => {
       // set error message
       state.message = action.payload;
       state.messageType = "error";
+      state.isSignedIn = false;
     });
   },
 });

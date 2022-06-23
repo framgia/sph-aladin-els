@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "../../redux/hooks";
-import { registerUser, loginUser } from "../../redux/userSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { registerUser, loginUser, userSelect } from "../../redux/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import env from "react-dotenv";
 import {
@@ -25,11 +25,12 @@ export interface User {
 function SignupPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isSignedIn } = useAppSelector(userSelect);
   const { register, handleSubmit } = useForm<User>();
   const handleSubmitUser: SubmitHandler<User> = (data, e) => {
     e?.preventDefault();
     dispatch(loginUser(data));
-    return navigate("/");
+    navigate("/");
   };
 
   return (

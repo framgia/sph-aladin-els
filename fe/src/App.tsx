@@ -15,6 +15,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./app/routes/PrivateRoute";
 import LoginPage from "./app/pages/Login";
 import Testing from "./app/Testing";
+import DashBoardPage from "./app/pages/DashBoardPage";
 
 function App() {
   const { message, messageType }: any = useAppSelector(userSelect);
@@ -31,14 +32,7 @@ function App() {
           <Routes>
             <Route element={<SignupPage />} path="/signup" />
             <Route element={<LoginPage />} path="/login" />
-            <Route
-              path="/"
-              element={
-                <PrivateRoute>
-                  <Testing />
-                </PrivateRoute>
-              }
-            />
+            <Route path="/" element={<DashBoardPage />} />
           </Routes>
         </Container>
       </Center>
