@@ -1,18 +1,18 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import SignupPage from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
 
-function Routes() {
+function Routers() {
   return (
-    <>
+    <Routes>
       <Route element={<SignupPage />} path="/signup" />
       <Route
         path="/"
         element={<PrivateRoute>{/* Private Page */}</PrivateRoute>}
       />
-    </>
+    </Routes>
   );
 }
 
-export default Routes;
+export default Routers;

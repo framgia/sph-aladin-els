@@ -13,7 +13,7 @@ import SignupPage from "./pages/SignUp";
 import { userSelect } from "./redux/userSlice";
 import { useAppSelector } from "./redux/hooks";
 import { BrowserRouter } from "react-router-dom";
-import Routes from "./routes/Routes";
+import Routers from "./routes/Routers";
 import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
       )}
       <Center h="980px">
         <Container maxW="md" h={"400px"}>
-          <Routes />
+          <Routers />
         </Container>
       </Center>
     </BrowserRouter>
