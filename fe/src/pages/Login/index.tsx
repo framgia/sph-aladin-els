@@ -29,7 +29,7 @@ function LoginPage() {
   const handleSubmitUser: SubmitHandler<User> = (data, e) => {
     e?.preventDefault();
     dispatch(loginUser(data));
-    return navigate("/");
+    // return navigate("/");
   };
 
   return (

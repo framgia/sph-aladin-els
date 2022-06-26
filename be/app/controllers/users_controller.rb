@@ -13,6 +13,15 @@ class UsersController < ApplicationController
           }, status: :unprocessable_entity
       end
     end
+
+    def index
+      users = User.all
+      render json: {
+        status: 200,
+        message: "users",
+        users: users
+      }, status: :ok
+    end
     
     private
 

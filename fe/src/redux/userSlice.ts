@@ -30,12 +30,32 @@ export const loginUser = createAsyncThunk(
           password: data.password,
         },
       });
-      return fulfillWithValue(res.data);
+      return res;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
   }
 );
+
+// export const getUsers = createAsyncThunk(
+//   "user/get_users",
+//   async (data: User, { rejectWithValue, fulfillWithValue }) => {
+//     try {
+//       const res = await elearningApiCall.get("/users", {
+//         headers: {
+//           Authorization:
+//         }
+//         user: {
+//           email: data.email,
+//           password: data.password,
+//         },
+//       });
+//       return fulfillWithValue(res.data);
+//     } catch (err: any) {
+//       return rejectWithValue(err.response.data);
+//     }
+//   }
+// );
 
 interface UserState {
   email: string;
@@ -46,6 +66,8 @@ interface UserState {
   messageType: string;
   id: any;
   isSignedIn: boolean;
+  users: [];
+  token: string;
 }
 
 const initialState: UserState = {
@@ -57,6 +79,8 @@ const initialState: UserState = {
   message: "",
   messageType: "",
   isSignedIn: false,
+  users: [],
+  token: "",
 };
 
 const userSlice = createSlice({
@@ -84,15 +108,18 @@ const userSlice = createSlice({
     });
 
     builder.addCase(loginUser.fulfilled, (state, { payload }: any) => {
-      const { email, id } = payload.data;
+      const { email, id } = payload.data.data;
+      const { authorization } = payload.headers;
       // set success message
       state.isFetching = false;
       state.isSuccess = true;
       state.id = id;
       state.email = email;
-      state.message = payload.status.message;
+      state.message = payload.data.status.message;
+
       state.messageType = "success";
       state.isSignedIn = true;
+      state.token = authorization;
     });
 
     builder.addCase(loginUser.rejected, (state, action: any) => {
