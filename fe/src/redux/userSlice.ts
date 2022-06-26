@@ -67,7 +67,6 @@ const userSlice = createSlice({
     builder.addCase(registerUser.pending, (state, action) => {
       state.isFetching = true;
     });
-
     builder.addCase(registerUser.fulfilled, (state, { payload }: any) => {
       // set success message
       state.isFetching = false;
@@ -75,7 +74,6 @@ const userSlice = createSlice({
       state.message = payload;
       state.messageType = "success";
     });
-
     builder.addCase(registerUser.rejected, (state, action: any) => {
       // set error message
       state.message = action.payload;
