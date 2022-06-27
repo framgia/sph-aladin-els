@@ -2,12 +2,18 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from "../../redux/hooks";
 import { registerUser } from "../../redux/userSlice";
+<<<<<<< HEAD
 import { Link, Navigate } from "react-router-dom";
+=======
+>>>>>>> master
 import {
   FormControl,
   FormLabel,
   Heading,
+<<<<<<< HEAD
   Text,
+=======
+>>>>>>> master
   Input,
   Button,
   Flex,
@@ -47,12 +53,15 @@ function SignupPage() {
           </Button>
         </FormControl>
       </form>
+<<<<<<< HEAD
       <Text mt={5} fontSize="xs">
         already have an account?
         <span>
           <Link to="/login"> Login</Link>
         </span>
       </Text>
+=======
+>>>>>>> master
     </Flex>
   );
 }
