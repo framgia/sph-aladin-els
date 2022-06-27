@@ -20,7 +20,6 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-<<<<<<< HEAD
 export const loginUser = createAsyncThunk(
   "user/login_user",
   async (data: User, { rejectWithValue, fulfillWithValue }) => {
@@ -41,7 +40,6 @@ export const loginUser = createAsyncThunk(
 export const getUsers = createAsyncThunk(
   "user/get_users",
   async (token: string, { rejectWithValue, fulfillWithValue }) => {
-    console.log(token);
     try {
       const res = await elearningApiCall.get("/users", {
         headers: {
@@ -57,43 +55,28 @@ export const getUsers = createAsyncThunk(
 
 interface UserState {
   email: string;
-=======
-interface UserState {
-  email: string;
-  password: string;
->>>>>>> master
   isFetching: boolean;
   isSuccess: boolean;
   isError: boolean;
   message: string;
   messageType: string;
-<<<<<<< HEAD
   id: any;
   isSignedIn: boolean;
   users: [];
   token: string;
-=======
->>>>>>> master
 }
 
 const initialState: UserState = {
   email: "",
-<<<<<<< HEAD
   id: "",
-=======
-  password: "",
->>>>>>> master
   isFetching: false,
   isSuccess: false,
   isError: false,
   message: "",
   messageType: "",
-<<<<<<< HEAD
   isSignedIn: false,
   users: [],
   token: "",
-=======
->>>>>>> master
 };
 
 const userSlice = createSlice({
@@ -116,7 +99,6 @@ const userSlice = createSlice({
       state.message = action.payload;
       state.messageType = "error";
     });
-<<<<<<< HEAD
     builder.addCase(loginUser.pending, (state, action) => {
       state.isFetching = true;
     });
@@ -157,8 +139,6 @@ const userSlice = createSlice({
       // set error message
       state.isFetching = true;
     });
-=======
->>>>>>> master
   },
 });
 
