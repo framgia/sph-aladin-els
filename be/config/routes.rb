@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   }
 
   get 'quizzes', to: 'quizzes#index'
+  get 'admin/quizzes', to: 'quizzes#admin_quizzes'
+
 
   # Defines the root path route ("/")
   # root "articles#index"
