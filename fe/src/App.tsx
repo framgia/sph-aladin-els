@@ -20,7 +20,7 @@ function App() {
   const { message, messageType }: any = useAppSelector(userSelect);
   return (
     <BrowserRouter>
-      {message.length > 0 && (
+      {message && message.length > 0 && (
         <Alert status={messageType}>
           <AlertIcon />
           <AlertTitle>{message}</AlertTitle>
