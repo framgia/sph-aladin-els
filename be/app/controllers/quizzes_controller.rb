@@ -1,6 +1,7 @@
 class QuizzesController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin?, only: [:admin_quizzes]
+  before_action :admin?, only: [:admin_quizzes, :update]
+  before_action :set_quiz, only: [:update]
   def index
     quizzes = Quiz.all
     render json: {
@@ -16,8 +17,14 @@ class QuizzesController < ApplicationController
         data: quizzes
       }, status: :ok
   end
-
-  
+ 
+  def update
+    if @quiz.update(quiz_params)
+      render json: @quiz
+    else
+      render nothing: true, status: :unprocessable_entity 
+    end
+  end
 
   private
 
@@ -25,6 +32,14 @@ class QuizzesController < ApplicationController
     if !current_user.is_admin
       render status: 401, message: "Unauthorized"
     end
+  end
+
+  def quiz_params
+     params.require(:quiz).permit(:title, :description, :id)
+  end
+
+  def set_quiz
+     @quiz = Quiz.find(params[:id]) 
   end
   
 end
