@@ -14,7 +14,7 @@ function Quizzes() {
   }, [token]);
 
   return (
-    <>
+    <Flex flexDirection="column">
       <Heading my="6" ml="32">
         Quizzes
       </Heading>
@@ -28,7 +28,7 @@ function Quizzes() {
           <Card key={id} title={title} description={description} />
         ))}
       </Flex>
-    </>
+    </Flex>
   );
 }
 

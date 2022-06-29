@@ -6,16 +6,17 @@ import PrivateRoute from "./PrivateRoute";
 import UserList from "../pages/UserLists";
 import Dashboard from "../pages/Dashboard";
 import Quizzes from "../pages/Quizzes";
+import AdminQuizzes from "../pages/AdminQuizzes";
 
 function Routers() {
   return (
     <Routes>
       <Route element={<SignupPage />} path="/signup" />
       <Route element={<LoginPage />} path="/login" />
-      <Route path="/" element={<Dashboard />}>
-        <Route element={<UserList />} path="user-list" />
-        <Route element={<Quizzes />} path="quizzes" />
-      </Route>
+      <Route path="/" element={<Dashboard />} />
+      <Route element={<UserList />} path="user-list" />
+      <Route element={<Quizzes />} path="quizzes" />
+      <Route path="admin/quizzes" element={<AdminQuizzes />} />
     </Routes>
   );
 }

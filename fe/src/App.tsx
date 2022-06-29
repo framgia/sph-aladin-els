@@ -19,7 +19,7 @@ import Routers from "./routes/Routers";
 import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
-  const { message, messageType }: any = useAppSelector(userSelect);
+  const { message, messageType, isSignedIn }: any = useAppSelector(userSelect);
   return (
     <BrowserRouter>
       {message && message.length > 0 && (
@@ -28,10 +28,12 @@ function App() {
           <AlertTitle>{message}</AlertTitle>
         </Alert>
       )}
-      <Flex>
-        <Link to="/quizzes">Quizzes</Link>
-      </Flex>
-
+      {isSignedIn && (
+        <Flex>
+          <Link to="/quizzes">Quizzes</Link>
+          <Link to="admin/quizzes">Admin Quizzes</Link>
+        </Flex>
+      )}
       <Flex maxW="full" alignItems="center" justifyContent="center" h="800px">
         <Routers />
       </Flex>
