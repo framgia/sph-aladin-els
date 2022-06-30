@@ -7,6 +7,7 @@ import UserList from "../pages/UserLists";
 import Dashboard from "../pages/Dashboard";
 import Quizzes from "../pages/Quizzes";
 import AdminQuizzes from "../pages/AdminQuizzes";
+import EditQuiz from "../pages/EditQuiz";
 
 function Routers() {
   return (
@@ -14,9 +15,10 @@ function Routers() {
       <Route element={<SignupPage />} path="/signup" />
       <Route element={<LoginPage />} path="/login" />
       <Route path="/" element={<Dashboard />} />
-      <Route element={<UserList />} path="user-list" />
-      <Route element={<Quizzes />} path="quizzes" />
-      <Route path="admin/quizzes" element={<AdminQuizzes />} />
+      <Route element={<UserList />} path="/user-list" />
+      <Route element={<Quizzes />} path="/quizzes" />
+      <Route element={<EditQuiz />} path="/admin/quizzes/:id/edit" />
+      <Route path="/admin/quizzes" element={<AdminQuizzes />} />
     </Routes>
   );
 }

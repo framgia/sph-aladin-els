@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   post 'user/edit', to: 'users#edit'
   get 'users', to: 'users#index'
-  post 'admin/quiz/edit', to: 'quizzes#update'
+  post 'admin/quiz/:id/edit', to: 'quizzes#update'
 
   # Defines the root path route ("/")
   # root "articles#index"
