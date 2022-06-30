@@ -29,9 +29,7 @@ class QuizzesController < ApplicationController
 
   def destroy
      if @quiz.destroy
-      render json: {
-        status: {code: 200,  message: "Quiz successfully deleted"}
-      }
+      render status: :ok, message: "Quiz successfully deleted"
      else
       render nothing: true, status: :unprocessable_entity 
      end

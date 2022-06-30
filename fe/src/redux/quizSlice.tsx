@@ -4,8 +4,6 @@ import { elearningApiCall } from "../utils/railsApi";
 import { UserEditInputForm, UserEditInputParams } from "../pages/EditQuiz";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TobeEditParams } from "../pages/AdminQuizzes";
-import { DeleteParams } from "../pages/AdminQuizzes";
-
 export const getQuizzes = createAsyncThunk(
   "quiz/get_quizzes",
   async (token: string, { rejectWithValue, fulfillWithValue }) => {
@@ -46,25 +44,8 @@ export const editQuiz = createAsyncThunk(
   }
 );
 
-export const deleteQuiz = createAsyncThunk(
-  "quiz/delete_quiz",
-  async (data: DeleteParams, { rejectWithValue, fulfillWithValue }) => {
-    const { id, token } = data;
-    try {
-      const res = await elearningApiCall.delete(`admin/quizzes/${id}`, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      return res.data;
-    } catch (err: any) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
 interface QuizSlice {
-  quizzes: any[];
+  quizzes: [];
   isFetching: boolean;
   isSuccess: boolean;
   isError: boolean;
@@ -104,15 +85,6 @@ const quizSlice = createSlice({
         TobeEditQuiz: payload,
       };
     },
-    deleteQuizToStore: (
-      state: QuizSlice,
-      { payload }: PayloadAction<number>
-    ) => {
-      return {
-        ...state,
-        quizzes: state.quizzes.filter(({ id }) => id !== payload),
-      };
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(getQuizzes.pending, (state, action: any) => {
@@ -148,4 +120,4 @@ export const quizSelect = (state: RootState) => state.quiz;
 export default quizSlice.reducer;
 
 // action
-export const { setTobeEditQuiz, deleteQuizToStore } = quizSlice.actions;
+export const { setTobeEditQuiz } = quizSlice.actions;
