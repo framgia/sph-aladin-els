@@ -1,7 +1,8 @@
 class QuizzesController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin?, only: [:admin_quizzes, :update]
-  before_action :set_quiz, only: [:update]
+  before_action :admin?, only: [:admin_quizzes, :update, :destroy]
+  before_action :set_quiz, only: [:update, :destroy]
+
   def index
     quizzes = Quiz.all
     render json: {
@@ -24,6 +25,14 @@ class QuizzesController < ApplicationController
     else
       render nothing: true, status: :unprocessable_entity 
     end
+  end
+
+  def destroy
+     if @quiz.destroy
+      render status: :ok, message: "Quiz successfully deleted"
+     else
+      render nothing: true, status: :unprocessable_entity 
+     end
   end
 
   private
