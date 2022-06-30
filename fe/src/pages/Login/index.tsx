@@ -1,10 +1,14 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from "../../redux/hooks";
-import { registerUser } from "../../redux/userSlice";
+import { registerUser, loginUser } from "../../redux/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import env from "react-dotenv";
 import {
   FormControl,
   FormLabel,
+  Container,
+  Text,
   Heading,
   Input,
   Button,
@@ -14,55 +18,50 @@ import {
 export interface User {
   email: string;
   password: string;
-}
-
-export interface UserInput {
-  email: string;
-  password: string;
-  lastname: string;
   firstname: string;
-  username: string;
+  lastname: string;
 }
 
-function SignupPage() {
+function LoginPage() {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<UserInput>();
-  const handleSubmitUser: SubmitHandler<UserInput> = (data) => {
-    dispatch(registerUser(data));
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<User>();
+  const handleSubmitUser: SubmitHandler<User> = (data, e) => {
+    e?.preventDefault();
+    dispatch(loginUser(data));
+    navigate("/");
   };
 
   return (
     <Flex flexDirection={"column"} h={"320px"} justifyContent={"space-between"}>
-      <Heading mb={"30"}>Register</Heading>
+      <Heading mb={"30"}>Login</Heading>
       <form onSubmit={handleSubmit(handleSubmitUser)}>
         <FormControl isRequired>
-          <FormLabel htmlFor="username">Username</FormLabel>
-          <Input id="username" {...register("username")} type="text" />
-          <FormLabel htmlFor="firstname">First name</FormLabel>
-          <Input id="firstname" {...register("firstname")} type="text" />
-          <FormLabel htmlFor="lastname">Last name</FormLabel>
-          <Input id="lastname" {...register("lastname")} type="text" />
-          <FormLabel htmlFor="lastname">Email address</FormLabel>
+          <FormLabel htmlFor="email">Email address</FormLabel>
           <Input
-            autoComplete="true"
             id="email"
             {...register("email", { required: "email is required" })}
             type="email"
           />
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
-            autoComplete="true"
             id="password"
             {...register("password", { required: "password is required" })}
             type="password"
           />
           <Button mt={5} bg={"blue.800"} color={"white"} type="submit">
-            Register
+            Login
           </Button>
         </FormControl>
       </form>
+      <Text fontSize="xs">
+        don't have an account?
+        <span>
+          <Link to="/signup"> Signup</Link>
+        </span>
+      </Text>
     </Flex>
   );
 }
 
-export default SignupPage;
+export default LoginPage;
