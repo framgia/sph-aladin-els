@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import Card from "../../components/Card";
-import { setTobeEditQuiz } from "../../redux/quizSlice";
+import { setTobeEditQuiz, deleteQuiz } from "../../redux/quizSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { userSelect } from "../../redux/userSlice";
 import { stringShorten } from "../../utils/stringShorten";
 import { useNavigate } from "react-router-dom";
+import { deleteQuizToStore } from "../../redux/quizSlice";
 
 import {
   Flex,
@@ -17,7 +18,7 @@ import {
   Th,
   Text,
   Td,
-  TableCaption,
+  useToast,
   TableContainer,
 } from "@chakra-ui/react";
 import { getQuizzes, quizSelect } from "../../redux/quizSlice";
@@ -28,10 +29,16 @@ export interface TobeEditParams {
   id: number;
 }
 
+export interface DeleteParams {
+  token: string;
+  id: number;
+}
+
 function AdminQuizzes() {
   const navigate = useNavigate();
   const { token } = useAppSelector(userSelect);
   const { quizzes } = useAppSelector(quizSelect);
+  const toast = useToast();
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getQuizzes(token));
@@ -43,9 +50,28 @@ function AdminQuizzes() {
       id,
       description,
     };
+    // send the to be edit params to the form values
     dispatch(setTobeEditQuiz(params));
     navigate(`${id}/edit`);
   };
+
+  const handleDeleteQuiz = (id: number) => {
+    const data = { id, token };
+    try {
+      // delete quiz on database
+      const req = dispatch(deleteQuiz(data)).then((res) => {
+        toast({
+          title: res.payload.status?.message,
+          status: "success",
+        });
+      });
+      // delete quiz on state
+      dispatch(deleteQuizToStore(id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <Flex
@@ -87,7 +113,12 @@ function AdminQuizzes() {
                   </Td>
 
                   <Td isNumeric>
-                    <Button size="xs" colorScheme="red" color="white">
+                    <Button
+                      onClick={() => handleDeleteQuiz(id)}
+                      size="xs"
+                      colorScheme="red"
+                      color="white"
+                    >
                       Delete
                     </Button>
                   </Td>
