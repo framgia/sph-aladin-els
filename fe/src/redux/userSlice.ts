@@ -1,15 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { elearningApiCall } from "../utils/railsApi";
-import { User } from "../pages/SignUp";
+import { UserInput } from "../pages/SignUp";
 
 export const registerUser = createAsyncThunk(
   "user/register_user",
-  async (data: User, { rejectWithValue, fulfillWithValue }) => {
+  async (data: UserInput, { rejectWithValue, fulfillWithValue }) => {
     try {
       const res = await elearningApiCall.post("/signup", {
         user: {
           email: data.email,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          username: data.username,
           password: data.password,
         },
       });

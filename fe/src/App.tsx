@@ -13,6 +13,7 @@ import "./App.css";
 import SignupPage from "./pages/SignUp";
 import { userSelect } from "./redux/userSlice";
 import { useAppSelector } from "./redux/hooks";
+
 import { BrowserRouter, Link } from "react-router-dom";
 
 import Routers from "./routes/Routers";
@@ -28,6 +29,7 @@ function App() {
           <AlertTitle>{message}</AlertTitle>
         </Alert>
       )}
+
       {isSignedIn && (
         <Flex>
           <Link to="/quizzes">Quizzes</Link>
@@ -37,6 +39,7 @@ function App() {
       <Flex maxW="full" alignItems="center" justifyContent="center" h="800px">
         <Routers />
       </Flex>
+
     </BrowserRouter>
   );
 }
