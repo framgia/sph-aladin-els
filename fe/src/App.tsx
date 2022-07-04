@@ -5,6 +5,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Flex,
 } from "@chakra-ui/react";
 
 import "./App.css";
@@ -12,12 +13,15 @@ import "./App.css";
 import SignupPage from "./pages/SignUp";
 import { userSelect } from "./redux/userSlice";
 import { useAppSelector } from "./redux/hooks";
-import { BrowserRouter } from "react-router-dom";
+
+import { BrowserRouter, Link } from "react-router-dom";
+
+
 import Routers from "./routes/Routers";
 import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
-  const { message, messageType }: any = useAppSelector(userSelect);
+  const { message, messageType, isSignedIn }: any = useAppSelector(userSelect);
   return (
     <BrowserRouter>
       {message && message.length > 0 && (
@@ -26,11 +30,17 @@ function App() {
           <AlertTitle>{message}</AlertTitle>
         </Alert>
       )}
-      <Center h="980px">
-        <Container maxW="md" h={"400px"}>
-          <Routers />
-        </Container>
-      </Center>
+
+      {isSignedIn && (
+        <Flex>
+          <Link to="/quizzes">Quizzes</Link>
+          <Link to="admin/quizzes">Admin Quizzes</Link>
+        </Flex>
+      )}
+      <Flex maxW="full" alignItems="center" justifyContent="center" h="800px">
+        <Routers />
+      </Flex>
+
     </BrowserRouter>
   );
 }

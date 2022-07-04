@@ -11,6 +11,16 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
+  get 'quizzes', to: 'quizzes#index'
+  get 'admin/quizzes', to: 'quizzes#admin_quizzes'
+
+  post 'user/edit', to: 'users#edit'
+  get 'users', to: 'users#index'
+
+  post '/admin/quizzes/:id', to: 'words#add_word'
+
+ 
+
   # Defines the root path route ("/")
   # root "articles#index"
 end
