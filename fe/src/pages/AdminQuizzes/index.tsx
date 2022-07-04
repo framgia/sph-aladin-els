@@ -3,6 +3,7 @@ import Card from "../../components/Card";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { userSelect } from "../../redux/userSlice";
 import { stringShorten } from "../../utils/stringShorten";
+import { addWord } from "../../redux/quizSlice";
 import {
   Flex,
   Heading,
@@ -18,15 +19,18 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { getQuizzes, quizSelect } from "../../redux/quizSlice";
+import { useNavigate } from "react-router-dom";
 
 function AdminQuizzes() {
   const { token } = useAppSelector(userSelect);
   const { quizzes } = useAppSelector(quizSelect);
-  console.log(quizzes);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getQuizzes(token));
   }, [token]);
+
+  const handleAddWord = (id: number) => {};
 
   return (
     <>
@@ -55,7 +59,12 @@ function AdminQuizzes() {
                     <Text fontSize="sm">{stringShorten(description)}</Text>
                   </Td>
                   <Td isNumeric>
-                    <Button size="xs" colorScheme="blue" color="white">
+                    <Button
+                      onClick={() => navigate(`/admin/quizzes/add_word/${id}`)}
+                      size="xs"
+                      colorScheme="blue"
+                      color="white"
+                    >
                       Add word
                     </Button>
                   </Td>

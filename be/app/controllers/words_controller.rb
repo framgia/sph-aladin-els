@@ -6,7 +6,7 @@ class WordsController < ApplicationController
 
     def add_word
     # create the word
-       word = @quiz.words.create(question: set_word[:question])
+     word = @quiz.words.create(question: set_word[:question])
        if word.choices.create(set_word[:choices_attributes])
         render json: {
             status: {code: 200, message: 'Word added', data: set_word}

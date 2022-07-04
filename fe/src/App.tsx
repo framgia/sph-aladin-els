@@ -8,8 +8,6 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-import "./App.css";
-
 import SignupPage from "./pages/SignUp";
 import { userSelect } from "./redux/userSlice";
 import { useAppSelector } from "./redux/hooks";

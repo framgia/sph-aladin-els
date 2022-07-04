@@ -2,6 +2,18 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { elearningApiCall } from "../utils/railsApi";
 
+export interface AddWordParams {
+  token: string;
+  id: any;
+  question: string;
+  choices_attributes: [
+    {
+      choice: string;
+      is_correct: boolean;
+    }
+  ];
+}
+
 export const getQuizzes = createAsyncThunk(
   "quiz/get_quizzes",
   async (token: string, { rejectWithValue, fulfillWithValue }) => {
@@ -14,6 +26,33 @@ export const getQuizzes = createAsyncThunk(
       return res.data.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const addWord = createAsyncThunk(
+  "quiz/add_word",
+  async (params: AddWordParams, { rejectWithValue, fulfillWithValue }) => {
+    const { id, token, question, choices_attributes } = params;
+
+    try {
+      const res = await elearningApiCall.post(
+        `admin/quizzes/${id}`,
+        {
+          word: {
+            question,
+            choices_attributes,
+          },
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res;
+    } catch (err: any) {
+      return rejectWithValue(err);
     }
   }
 );
