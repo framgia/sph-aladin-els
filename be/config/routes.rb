@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   }
 
   get 'quizzes', to: 'quizzes#index'
+  post 'quiz/new', to: 'quizzes#create'
 
   # Defines the root path route ("/")
   # root "articles#index"
