@@ -20,6 +20,22 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const getCurrentUser = createAsyncThunk(
+  "user/current_user",
+  async (token: string, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const res = await elearningApiCall.get("/current_user", {
+        headers: {
+          Authorization: token,
+        },
+      });
+      return res.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data.status.message);
+    }
+  }
+);
+
 export const loginUser = createAsyncThunk(
   "user/login_user",
   async (data: User, { rejectWithValue, fulfillWithValue }) => {
@@ -63,10 +79,22 @@ interface UserState {
   id: any;
   isSignedIn: boolean;
   users: [];
+  current_user: {
+    email: string;
+    lastname: string;
+    is_admin: boolean;
+    username: string;
+  };
   token: string;
 }
 
 const initialState: UserState = {
+  current_user: {
+    email: "",
+    lastname: "",
+    is_admin: false,
+    username: "",
+  },
   email: "",
   id: "",
   isFetching: false,
@@ -138,6 +166,12 @@ const userSlice = createSlice({
     builder.addCase(getUsers.pending, (state, action: any) => {
       // set error message
       state.isFetching = true;
+    });
+
+    builder.addCase(getCurrentUser.fulfilled, (state, action: any) => {
+      // set error message
+
+      state.current_user = action.payload;
     });
   },
 });

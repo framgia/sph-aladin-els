@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 import { elearningApiCall } from "../utils/railsApi";
+import { StringMappingType } from "typescript";
 
 export const getQuizzes = createAsyncThunk(
   "quiz/get_quizzes",
@@ -12,6 +13,42 @@ export const getQuizzes = createAsyncThunk(
         },
       });
       return res.data.data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+interface QuizParams {
+  token: string;
+  description: string;
+  title: string;
+}
+
+interface QuizAddParams {
+  id: number;
+  description: string;
+  title: string;
+}
+
+export const addQuiz = createAsyncThunk(
+  "quiz/add_quiz",
+  async (data: QuizParams, { rejectWithValue, fulfillWithValue }) => {
+    const { token, title, description } = data;
+    try {
+      const res = await elearningApiCall.post(
+        "/quiz/new",
+        {
+          title,
+          description,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -54,6 +91,15 @@ const quizSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.quizzes = payload;
+    });
+    builder.addCase(addQuiz.fulfilled, (state: any, { payload }: any) => {
+      const { description, title, id } = payload;
+      const params: QuizAddParams = {
+        description,
+        title,
+        id,
+      };
+      state.quizzes.push(params);
     });
   },
 });

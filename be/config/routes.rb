@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get 'quizzes', to: 'quizzes#index'
  post 'user/edit', to: 'users#edit'
+ post 'quiz/new', to: 'quizzes#create'
  get 'users', to: 'users#index'
 
   # Defines the root path route ("/")
