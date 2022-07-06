@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-
+  
+   post 'password/forgot', to: 'passwords#forgot'
+   post 'password/reset', to: 'passwords#reset'
   # Defines the root path route ("/")
   # root "articles#index"
 end
