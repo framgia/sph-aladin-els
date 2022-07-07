@@ -14,7 +14,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-function SignupPage() {
+const SignupPage = () => {
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm<User>();
   const handleSubmitUser: SubmitHandler<User> = (data) => {
@@ -51,6 +51,6 @@ function SignupPage() {
       </Text>
     </Flex>
   );
-}
+};
 
 export default SignupPage;

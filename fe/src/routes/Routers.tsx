@@ -11,7 +11,7 @@ function Routers() {
       <Route element={<SignupPage />} path="/signup" />
       <Route element={<LoginPage />} path="/login" />
       <Route element={<ForgotPassword />} path="/forgot" />
-      <Route element={<ResetPasswod />} path="/reset-password" />
+      <Route element={<ResetPasswod />} path="/reset_password" />
       <Route
         path="/"
         element={<PrivateRoute>{/* Private Page */}</PrivateRoute>}

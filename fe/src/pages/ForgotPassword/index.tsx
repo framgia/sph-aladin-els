@@ -16,7 +16,7 @@ import { User } from "../Login";
 import { userSelect } from "../../redux/userSlice";
 import { useAppDispatch } from "../../redux/hooks";
 
-function ForgotPassword() {
+const ForgotPassword = () => {
   const { message, messageType, isFetching, isSuccess }: any =
     useAppSelector(userSelect);
   const { register, handleSubmit } = useForm<User>();
@@ -55,6 +55,6 @@ function ForgotPassword() {
       )}
     </Flex>
   );
-}
+};
 
 export default ForgotPassword;

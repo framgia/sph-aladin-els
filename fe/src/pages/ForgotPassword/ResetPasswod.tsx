@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { User } from "../Login";
 
-function ResetPasswod() {
+const ResetPasswod = () => {
   const dispatch = useAppDispatch();
   const { isSuccess }: any = useAppSelector(userSelect);
   const { register, handleSubmit, reset } = useForm<User>();
@@ -63,6 +63,6 @@ function ResetPasswod() {
       )}
     </Flex>
   );
-}
+};
 
 export default ResetPasswod;
