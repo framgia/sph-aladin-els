@@ -30,7 +30,6 @@ export const loginUser = createAsyncThunk(
           password: data.password,
         },
       });
-      console.log(res);
       return fulfillWithValue(res.data);
     } catch (err: any) {
       return rejectWithValue(err.response.data);
@@ -47,7 +46,6 @@ export const forgotPassword = createAsyncThunk(
       });
       return fulfillWithValue(res.data);
     } catch (err: any) {
-      console.log(err);
       return rejectWithValue(err.response.data);
     }
   }
@@ -124,7 +122,7 @@ const userSlice = createSlice({
       state.isSuccess = true;
       state.id = payload?.dataid;
       state.email = payload?.data?.email;
-      console.log(payload);
+
       state.message = payload.status?.message;
       state.messageType = "success";
       state.isSignedIn = true;
@@ -156,7 +154,7 @@ const userSlice = createSlice({
     });
     builder.addCase(resetPassword.fulfilled, (state, action: any) => {
       // set error message
-      console.log(action);
+
       state.message = action.payload;
       state.messageType = "success";
       state.isSuccess = true;
