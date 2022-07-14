@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from "../../redux/hooks";
 import { registerUser } from "../../redux/userSlice";
 import { Link, Navigate } from "react-router-dom";
+import { User } from "../Login";
 import {
   FormControl,
   FormLabel,
@@ -13,12 +14,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-export interface User {
-  email: string;
-  password: string;
-}
-
-function SignupPage() {
+const SignupPage = () => {
   const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm<User>();
   const handleSubmitUser: SubmitHandler<User> = (data) => {
@@ -55,6 +51,6 @@ function SignupPage() {
       </Text>
     </Flex>
   );
-}
+};
 
 export default SignupPage;

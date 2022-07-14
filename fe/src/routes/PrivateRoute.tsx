@@ -4,6 +4,6 @@ import { RootState } from "../redux/store";
 import useAuth from "../utils/useAuth";
 
 export default function PrivateRoute({ children }: any) {
-  const auth = useAuth();
-  return auth ? children : <Navigate to="/signup" />;
+  const auth = useSelector((state: RootState) => state.user.isSignedIn);
+  return auth ? children : <Navigate to="/login" />;
 }

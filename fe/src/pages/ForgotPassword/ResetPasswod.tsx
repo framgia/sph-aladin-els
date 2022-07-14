@@ -1,9 +1,8 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "../../redux/hooks";
-import { registerUser, loginUser } from "../../redux/userSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link, useNavigate } from "react-router-dom";
-import env from "react-dotenv";
+import { resetPassword, userSelect } from "../../redux/userSlice";
 import {
   FormControl,
   FormLabel,
@@ -14,28 +13,20 @@ import {
   Button,
   Flex,
 } from "@chakra-ui/react";
+import { User } from "../Login";
 
-export interface User {
-  email: string;
-  password: string;
-  firstname: string;
-  lastname: string;
-  token: string;
-}
-
-function LoginPage() {
+const ResetPasswod = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<User>();
+  const { isSuccess }: any = useAppSelector(userSelect);
+  const { register, handleSubmit, reset } = useForm<User>();
   const handleSubmitUser: SubmitHandler<User> = (data, e) => {
     e?.preventDefault();
-    dispatch(loginUser(data));
-    return navigate("/");
+    dispatch(resetPassword(data));
+    isSuccess && reset();
   };
-
   return (
     <Flex flexDirection={"column"} h={"320px"} justifyContent={"space-between"}>
-      <Heading mb={"30"}>Login</Heading>
+      <Heading mb={"30"}>Reset password</Heading>
       <form onSubmit={handleSubmit(handleSubmitUser)}>
         <FormControl isRequired>
           <FormLabel htmlFor="email">Email address</FormLabel>
@@ -44,33 +35,34 @@ function LoginPage() {
             {...register("email", { required: "email is required" })}
             type="email"
           />
-          <FormLabel htmlFor="password">Password</FormLabel>
+          <FormLabel htmlFor="password">New Password</FormLabel>
           <Input
             id="password"
             {...register("password", { required: "password is required" })}
             type="password"
           />
+          <FormLabel htmlFor="token">Token</FormLabel>
+          <Input
+            id="token"
+            {...register("token", { required: "token" })}
+            type="password"
+          />
           <Button mt={5} bg={"blue.800"} color={"white"} type="submit">
-            Login
+            Reset Password
           </Button>
         </FormControl>
       </form>
-      <Flex flexDirection={"column"}>
-        <Text fontSize="xs" my={5}>
-          don't have an account?
-          <span>
-            <Link to="/signup"> Signup</Link>
-          </span>
+      {isSuccess ? (
+        <Text fontSize="xs" mt={"5"}>
+          <Link to="/"> Login</Link>
         </Text>
-        <Text fontSize="xs">
-          forgot password?
-          <span>
-            <Link to="/forgot"> Forgot password</Link>
-          </span>
+      ) : (
+        <Text fontSize="xs" mt={"5"}>
+          <Link to="/forgot"> Generate token </Link>
         </Text>
-      </Flex>
+      )}
     </Flex>
   );
-}
+};
 
-export default LoginPage;
+export default ResetPasswod;
