@@ -2,22 +2,35 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch } from "../../redux/hooks";
 import { registerUser } from "../../redux/userSlice";
-import { Link, Navigate } from "react-router-dom";
-import { User } from "../Login";
 import {
   FormControl,
   FormLabel,
   Heading,
-  Text,
   Input,
   Button,
   Flex,
+  Text,
 } from "@chakra-ui/react";
 
-const SignupPage = () => {
+import { Link } from "react-router-dom";
+
+export interface User {
+  email: string;
+  password: string;
+}
+
+export interface registerParams {
+  email: string;
+  password: string;
+  lastname: string;
+  username: string;
+  firstname: string;
+}
+
+function SignupPage() {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<User>();
-  const handleSubmitUser: SubmitHandler<User> = (data) => {
+  const { register, handleSubmit } = useForm<registerParams>();
+  const handleSubmitUser: SubmitHandler<registerParams> = (data) => {
     dispatch(registerUser(data));
   };
 
@@ -32,6 +45,24 @@ const SignupPage = () => {
             {...register("email", { required: "email is required" })}
             type="email"
           />
+          <FormLabel htmlFor="lastname">Last name</FormLabel>
+          <Input
+            id="lastname"
+            {...register("lastname", { required: "lastname is required" })}
+            type="text"
+          />
+          <FormLabel htmlFor="firstname">First name</FormLabel>
+          <Input
+            id="firstname"
+            {...register("firstname", { required: "first name is required" })}
+            type="text"
+          />
+          <FormLabel htmlFor="username">User name</FormLabel>
+          <Input
+            id="User name"
+            {...register("username", { required: "user name is required" })}
+            type="text"
+          />
           <FormLabel htmlFor="password">Password</FormLabel>
           <Input
             id="password"
@@ -42,15 +73,17 @@ const SignupPage = () => {
             Register
           </Button>
         </FormControl>
+        <Flex flexDirection={"column"}>
+          <Text fontSize="xs" my={5}>
+            Already have an account? |
+            <span>
+              <Link to="/login">Login</Link>
+            </span>
+          </Text>
+        </Flex>
       </form>
-      <Text mt={5} fontSize="xs">
-        already have an account?
-        <span>
-          <Link to="/login"> Login</Link>
-        </span>
-      </Text>
     </Flex>
   );
-};
+}
 
 export default SignupPage;
